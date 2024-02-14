@@ -1,0 +1,13 @@
+﻿@model ProductModel
+
+<div>
+	<form method="post" asp-action="Delete">
+		<div class="form-group">
+			<label asp-for="Id">Id</label>
+		</div>
+		<input type="hidden" name="returnUrl" value="@(ViewBag.ReturnUrl??"/")" />
+		<div class="form-group">
+			<button class="btn btn-success" type="submit">Delete</button>
+		</div>
+	</form>
+</div>

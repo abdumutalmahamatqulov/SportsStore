@@ -1,0 +1,71 @@
+﻿@model List<ProductModel>
+
+
+<div >
+	<h1 class="text-center">Products</h1>
+	<div style="display:flex;gap:7px">
+		<form asp-action="Create" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Create</button>
+		</form>
+		<form asp-controller="Category" asp-action="Index" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Category</button>
+		</form>
+		<form asp-controller="Order" asp-action="Index" name="order">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Order</button>
+		</form>
+		<form asp-action="Create" asp-controller="Order" method="post"
+			asp-route-returnUrl="@(Context.GetUrl()??"/")" class="order-form">
+			<input name="customerName" type="text" class="form-control"/>
+			<button class="btn btn-success" type="submit">Add to Order</button>
+		</form>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th><th>Name</th><th>Description</th><th>Price</th><th>Category</th><th>Create Date</th><th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var item in Model)
+			{
+				<tr>
+					<td>
+						<input type="checkbox" key="@item.Id" class="card-checkbox" />
+					</td>
+					<td>@item.Name</td>
+					<td>@item.Description</td>
+					<td>
+						@if(!item.HasDiscount)
+						{
+							@item.Price
+						}
+						else {
+							<span style="text-decoration:line-through" class="text-danger" >@item.Price</span>
+							<span>/</span>
+							<span class="bg-success text-white">@item.DiscountedPrice</span>
+						}
+					</td>
+					<td>@item.Category.Name</td>
+					<td>@item.CreateDate</td>
+					<td style="display:flex;gap:7px">
+						<form asp-action="Update" method="get">
+							<input type="hidden" value="@item.Id" name="id"/>
+							<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+							<button type="submit" class="btn btn-success">Update</button>
+						</form>
+						<form asp-action="Delete" method="post">
+							<input type="hidden" value="@item.Id" name="Id" />
+							<input type ="hidden" value="@Context.GetUrl()" name="returnUrl"/>
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</td>
+					
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<script asp-src-include="~/*.js" asp-append-version="true"></script>

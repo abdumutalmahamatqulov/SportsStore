@@ -1,0 +1,62 @@
+﻿@model ProductUpdateModel
+<div>
+	<form method="post" asp-action="Update">
+		<div class="form-group">
+			<input asp-for="Id" type="hidden"/>
+		</div>
+		<div class="form-group">
+			<label asp-for="Name">
+				Name
+			</label>
+			<input asp-for="Name" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="Description">
+				Description
+			</label>
+			<input asp-for="Description" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="Price">
+				Price
+			</label>
+			<input asp-for="Price" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="Discount">
+				Discount
+			</label>
+			<input asp-for="Discount" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="CategoryId">
+				Category
+			</label>
+			<select asp-for="CategoryId" class="form-control">
+				<option value="">Select Category</option>
+				@foreach (var category in (List<CategoryModel>)ViewBag.Categories)
+				{
+					<option value="@category.Id">@category.Name</option>
+
+				}
+			</select>
+		</div>
+		<div class="form-group">
+			<label asp-for="CategoryName">
+				Category Name
+			</label>
+			<input asp-for="CategoryName" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="CategoryDescription">
+				Category Description
+			</label>
+			<input asp-for="CategoryDescription" class="form-control" />
+		</div>
+		<input type="hidden" name="returnUrl" value="@(ViewBag.ReturnUrl??"/Product")" />
+		<div class="form-group">
+			<button class="btn btn-success" type="submit">Save</button>
+		</div>
+	</form>
+	<div asp-validation-summary="All" class="text-danger"></div>
+</div>

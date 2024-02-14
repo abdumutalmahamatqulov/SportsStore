@@ -1,0 +1,44 @@
+﻿@model List<CategoryModel>
+
+<div>
+	<h1 class="text-center">Category</h1>
+	<div style="display:flex;gap:7px;">
+		<form asp-action="Create" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Create</button>
+		</form>
+		<form asp-controller="Product" asp-action="Index" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Back To Products</button>
+		</form>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th><th>Description</th><th>Create date</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var item in Model)
+			{
+				<tr>
+					<td>@item.Name</td>
+					<td>@item.Description</td>
+					<td>@item.CreateDate</td>
+					<td style="display:flex;gap:7px">
+						<form asp-action="Update" method="get">
+							<input type="hidden" value="@item.Id" name="id"/>
+							<input type="hidden" value="@Context.GetUrl()" name="returnUrl"/>
+							<button type="submit" class="btn btn-success">Update</button>
+						</form>
+						<form asp-action="Delete" method="post">
+							<input type="hidden" value="@item.Id" name="id"/>
+							<input type="hidden" value="@Context.GetUrl()" name="returnUrl"/>
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

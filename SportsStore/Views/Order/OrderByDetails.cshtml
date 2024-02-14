@@ -1,0 +1,43 @@
+﻿@model OrderExtendedModel
+
+<div>
+	<h1>Order Detail List</h1>
+	<form asp-action="OrderByDetails" method="get" asp-controller="Order">
+		<div class="form-group">
+			<label asp-for="Status">
+				Status
+			</label>
+			<input asp-for="Status" class="form-control" disabled />
+		</div>		
+		<div class="form-group">
+			<label asp-for="CustomerName">
+				Customer Name
+			</label>
+			<input asp-for="CustomerName" class="form-control" disabled />
+		</div>		
+		<div class="form-group">
+			<label asp-for="CreateDate">
+				Create Date
+			</label>
+			<input asp-for="CreateDate" class="form-control" disabled/>
+		</div>
+	</form>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Product Id</th><th>Count</th><th>Create Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.OrderDetails)
+			{
+				<tr>
+					<td>@item.Product.Name</td><td>@item.Count</td><td>@item.CreateDate</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+

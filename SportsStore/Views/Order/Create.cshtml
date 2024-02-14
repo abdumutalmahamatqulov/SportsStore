@@ -1,0 +1,25 @@
+﻿@model OrderDetailCreateModel
+
+<div>
+	<form method="post" asp-action="Create">
+		<div class="form-group">
+			<label asp-for="OrderId">
+				OrderId
+			</label>
+			<input asp-for="OrderId" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="ProductId">
+				ProductId
+			</label>
+			<input asp-for="ProductId" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label asp-for="Count">
+				Count
+			</label>
+			<input asp-for="Count" class="form-control" />
+		</div>
+	</form>
+	<div asp-validation-summary="All" class="text-danger"></div>
+</div>
