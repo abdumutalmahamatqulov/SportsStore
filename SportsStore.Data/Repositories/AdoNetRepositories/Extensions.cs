@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols;
+using SportsStore.Data.Repositories.EntityFrameworkRepositories;
 using SportsStore.Domain.Repositories;
 
 namespace SportsStore.Data.Repositories.AdoNetRepositories;

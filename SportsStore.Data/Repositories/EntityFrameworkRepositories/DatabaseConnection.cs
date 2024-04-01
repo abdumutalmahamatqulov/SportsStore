@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace SportsStore.Data.Repositories.AdoNetRepositories
+namespace SportsStore.Data.Repositories.EntityFrameworkRepositories
 {
     public class DatabaseConnection
     {

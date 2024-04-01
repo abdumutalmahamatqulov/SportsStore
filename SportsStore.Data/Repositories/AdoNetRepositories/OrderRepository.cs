@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using SportsStore.Data.Repositories.EntityFrameworkRepositories;
 using SportsStore.Domain.Entities;
 using SportsStore.Domain.Repositories;
 
@@ -99,7 +100,7 @@ public class OrderRepository : IOrderRepository
 
 			if (includeDetail)
 			{
-				order.OrderDetails =(await _orderDetailRepository.GetByOrderId(order.Id)).ToArray();
+				order.OrderDetails =(await _orderDetailRepository.GetByOrderId(order.Id)).ToList();
 			}
 
 			return order;
@@ -184,7 +185,7 @@ public class OrderRepository : IOrderRepository
                 foreach (var item in orders)
                 {
 					item.OrderDetails = orderDetails
-						.Where(t => t.OrderId == item.Id).ToArray();
+						.Where(t => t.OrderId == item.Id).ToList();
 
                 }
 

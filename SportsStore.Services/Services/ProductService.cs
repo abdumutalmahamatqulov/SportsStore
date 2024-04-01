@@ -37,7 +37,10 @@ public class ProductService : IProductService
 				};
 				 newcategpory = await  _categoryRepository.Create(categorynew);
 			}
-
+			
+			//string fileName = Guid.NewGuid().ToString() + model.Img.FileName;
+			//var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+			//model.Img.CopyTo(File.Create(path));
 
 			var newProduct = new Product
 			{
@@ -48,9 +51,9 @@ public class ProductService : IProductService
 				Price = model.Price,
 				CategoryId = model.CategoryId.HasValue?model.CategoryId.Value: newcategpory.Id,
 				CreateDate = DateTime.Now,
-
+				//ImgName = fileName
 			};
-			_repository.Create(newProduct);
+			await _repository.Create(newProduct);
 		}
 		catch (Exception ex)
 		{

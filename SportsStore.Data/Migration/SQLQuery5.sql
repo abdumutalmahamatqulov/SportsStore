@@ -16,7 +16,7 @@ CREATE TABLE Products (
 	CreateDate datetime,
 	CategoryId UNIQUEIDENTIFIER,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (CategoryId) REFERENCES Categories(Id)
+	FOREIGN KEY (CategoryId) REFERENCES Categories(Id) ON DELETE CASCADE
 );
 
 GO
@@ -37,8 +37,8 @@ CREATE TABLE OrderDetails (
 	Count int,
 	CreateDate datetime,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (ProductId) REFERENCES Products(Id),
-	FOREIGN KEY (OrderId) REFERENCES Orders(id)
+	FOREIGN KEY (ProductId) REFERENCES Products(Id) ON DELETE CASCADE,
+	FOREIGN KEY (OrderId) REFERENCES Orders(id)  ON DELETE CASCADE
 );
 
 

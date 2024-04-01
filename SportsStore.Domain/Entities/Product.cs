@@ -15,6 +15,7 @@ public class Product : IEntity, ICloneable
 	public decimal Price { get; set; }
 	public int Discount { get; set; }
 	public Guid CategoryId { get; set; }
+	public string ImgName { get; set; }
 	public DateTime CreateDate { get; set; }
 	public Category Category { get; set; }
 

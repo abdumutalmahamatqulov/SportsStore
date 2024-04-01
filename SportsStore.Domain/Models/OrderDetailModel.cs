@@ -19,7 +19,7 @@ public  class OrderDetailModel
 	{
 		OrderId = entity.OrderId;
 		ProductId = entity.ProductId;
-		Count = entity.Count;
+		Count = entity.Count??0;
 		CreateDate = entity.CreateDate;
 		Product = entity.Product is null ? null : new ProductModel().MapFromEntity(entity.Product);
 		Order = entity.Order is null ?null : new OrderModel().MapFromEntity(entity.Order);

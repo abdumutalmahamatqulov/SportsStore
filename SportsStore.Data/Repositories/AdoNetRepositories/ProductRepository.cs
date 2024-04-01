@@ -1,9 +1,10 @@
-﻿	using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using SportsStore.Data.Repositories.EntityFrameworkRepositories;
 using SportsStore.Domain.Entities;
 using SportsStore.Domain.Entities.Interfaces;
 using SportsStore.Domain.Repositories;
@@ -77,8 +78,15 @@ public class ProductRepository : IProductRepository
 			{
 
 				command.CommandType = System.Data.CommandType.Text;
+				try
+				{
+					await command.ExecuteNonQueryAsync();
 
-				await command.ExecuteNonQueryAsync();
+				}
+				catch(Exception e)
+				{
+
+				}
 			}
 		}
 

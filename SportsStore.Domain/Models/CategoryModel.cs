@@ -18,8 +18,8 @@ public class CategoryModel
 	{
 		if (entity is null)
 			return null;
-		double d = 12.343;
-		int i = (int)d;
+/*		double d = 12.343;
+		int i = (int)d;*/
 		return new CategoryModel
 		{
 			Id = entity.Id,

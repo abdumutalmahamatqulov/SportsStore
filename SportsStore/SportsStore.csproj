@@ -9,6 +9,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SportsStore.Data\SportsStore.Data.csproj" />
     <ProjectReference Include="..\SportsStore.Services\SportsStore.Services.csproj" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2"/>
+
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace SportsStore.Domain.Models;
 
@@ -23,4 +24,6 @@ public class ProductCreateModel
 	public string? CategoryName { get; set; }
 	[AllowNull]
 	public string? CategoryDescription { get; set; }
+
+	public IFormFile? Img { get; set; }
 }
