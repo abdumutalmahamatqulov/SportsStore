@@ -6,15 +6,15 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Status</th><th>Customer Name</th><th>Create Date</th><th>Order Details</th>
+				<th>Status</th><th>User Name</th><th>Create Date</th><th>Order Details</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var item in Model)
-			{
+			{ 
 				<tr>
 					<td>@item.Status</td>
-					<td>@item.CustomerName</td>
+					<td>@item.UserName</td>
 					<td>@item.CreateDate</td>
 					<td>
 						<form asp-action="OrderByDetails" asp-route-orderId="@item.Id" method="get">

@@ -22,8 +22,8 @@ namespace SportsStore.Data.Repositories.FakeRepositories
 		};
 		public static List<Order> Orders { get; set; } = new List<Order>()
 		{
-			new Order{Id = Guid.Parse("bbbbbbbb-dddd-dddd-dddd-abdabdabdabd"), Status = OrderStatus.Created,CustomerName = "Shomilbek",CreateDate = DateTime.Now},
-			new Order{Id = Guid.Parse("aabbbbbb-dddd-dddd-dddd-abdabdabdabd"), Status = OrderStatus.InProgress,CustomerName = "Abduvali",CreateDate = DateTime.Now},
+			new Order{Id = Guid.Parse("bbbbbbbb-dddd-dddd-dddd-abdabdabdabd"), Status = OrderStatus.Created,UserId = Guid.Parse(""),CreateDate = DateTime.Now},
+			new Order{Id = Guid.Parse("aabbbbbb-dddd-dddd-dddd-abdabdabdabd"), Status = OrderStatus.InProgress,UserId = Guid.Parse(""),CreateDate = DateTime.Now},
 		};
 		public static List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>()
 		{

@@ -20,7 +20,7 @@ public class OrderRepository : IOrderRepository
 			Id = Guid.NewGuid(),
 			Status = order.Status,
 			CreateDate = DateTime.Now,
-			CustomerName = order.CustomerName,
+			UserId = order.UserId,
 		};
 		_appDbContext.Orders.Add(orderCreate);
 		await _appDbContext.SaveChangesAsync();
@@ -29,10 +29,10 @@ public class OrderRepository : IOrderRepository
 
 	public async Task<Order> Delete(Guid Id)
 	{
-		var ID = _appDbContext.Orders.FirstOrDefault(x => x.Id.Equals(Id));
-		_appDbContext.Orders.Remove(ID);
+		var Byid = _appDbContext.Orders.FirstOrDefault(x => x.Id.Equals(Id));
+		_appDbContext.Orders.Remove(Byid);
 		await _appDbContext.SaveChangesAsync();
-		return ID;
+		return Byid;
 	}
 
 	public async Task<Order> Get(Guid Id, bool includeDetail)
@@ -42,7 +42,7 @@ public class OrderRepository : IOrderRepository
 			var order = _appDbContext.Orders
 				.Include(o => o.OrderDetails)
 				.ThenInclude(x => x.Product)
-				
+				.Include(u=>u.UserName)
 				.First(x => x.Id == Id);
 			return order;
 		}
@@ -51,6 +51,10 @@ public class OrderRepository : IOrderRepository
 
 	public IQueryable<Order> GetAll(bool includeProduct)
 	{
+		if (includeProduct)
+		{
+			return _appDbContext.Orders.Include(x => x.UserName);
+		}
 		return _appDbContext.Orders.AsQueryable();
 	}
 
@@ -63,7 +67,7 @@ public class OrderRepository : IOrderRepository
 		}
 		UpdateOrder.Status = order.Status;
 		UpdateOrder.CreateDate = order.CreateDate;
-		UpdateOrder.CustomerName = order.CustomerName;
+		UpdateOrder.UserId = order.UserId;
 		return UpdateOrder;
 	}
 }

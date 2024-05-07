@@ -19,7 +19,7 @@ public  class OrderRepository : IOrderRepository
 			Id = Guid.NewGuid(),
 			Status = order.Status,
 			CreateDate = DateTime.Now,
-			CustomerName = order.CustomerName,
+			UserId = order.UserId,
 		};
 		 DataStore.Orders.Add(orderCreate);
 		return Task.FromResult( orderCreate);
@@ -42,7 +42,7 @@ public  class OrderRepository : IOrderRepository
 				Id = order.Id,
 				Status = order.Status,
 				CreateDate = order.CreateDate,
-				CustomerName = order.CustomerName,
+				UserId = order.UserId,
 				/*OrderDetails = _orderDetailRepository.OrderById(order.Id).ToArray()*/
 			};
 			return Task.FromResult(order);
@@ -64,7 +64,7 @@ public  class OrderRepository : IOrderRepository
 		}
 		UpdateOrder.Status = order.Status;
 		UpdateOrder.CreateDate = order.CreateDate;
-		UpdateOrder.CustomerName = order.CustomerName;
+		UpdateOrder.UserId = order.UserId;
 		return Task.FromResult(UpdateOrder);
 	}
 }

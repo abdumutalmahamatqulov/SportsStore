@@ -5,40 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace SportsStore.Data.Repositories.EntityFrameworkRepositories
+namespace SportsStore.Data.Repositories.EntityFrameworkRepositories;
+
+public class DatabaseConnection
 {
-    public class DatabaseConnection
+    private SqlConnectionOptions _options;
+
+    public DatabaseConnection(SqlConnectionOptions options)
     {
-        private SqlConnectionOptions _options;
+        _options = options;
+    }
 
-        public DatabaseConnection(SqlConnectionOptions options)
+    private async Task Connect()
+    {
+        if (Connection is null)
         {
-            _options = options;
+            Connection = new SqlConnection(_options.ConnectionString);
+            await Connection.OpenAsync();
+            return;
         }
-
-        private async Task Connect()
+        if (Connection.State == System.Data.ConnectionState.Closed
+            || Connection.State == System.Data.ConnectionState.Broken)
         {
-            if (Connection is null)
-            {
-                Connection = new SqlConnection(_options.ConnectionString);
-                await Connection.OpenAsync();
-                return;
-            }
-            if (Connection.State == System.Data.ConnectionState.Closed
-                || Connection.State == System.Data.ConnectionState.Broken)
-            {
-                Connection = new SqlConnection(_options.ConnectionString);
-                await Connection.OpenAsync();
-            }
+            Connection = new SqlConnection(_options.ConnectionString);
+            await Connection.OpenAsync();
         }
+    }
 
-        private SqlConnection Connection { get; set; }
+    private SqlConnection Connection { get; set; }
 
-        public async Task<SqlConnection> GetConnection()
-        {
-            await Connect();
+    public async Task<SqlConnection> GetConnection()
+    {
+        await Connect();
 
-            return Connection;
-        }
+        return Connection;
     }
 }

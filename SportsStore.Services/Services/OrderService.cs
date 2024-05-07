@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using SportsStore.Domain.Entities;
 using SportsStore.Domain.Models;
 using SportsStore.Domain.Repositories;
@@ -14,15 +17,18 @@ public class OrderService : IOrderService
 {
     readonly IOrderRepository _orderRepository;
     readonly IOrderDetailRepository _orderDetailRepository;
-	public OrderService(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository)
-	{
-		_orderRepository = orderRepository;
-		_orderDetailRepository = orderDetailRepository;
-	}
+	readonly IHttpContextAccessor _httpContextAccessor;
+    public OrderService(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository, IHttpContextAccessor httpContextAccessor)
+    {
+        _orderRepository = orderRepository;
+        _orderDetailRepository = orderDetailRepository;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-	public Task<List<OrderModel>> GetOrdersAsync()
+    public Task<List<OrderModel>> GetOrdersAsync()
     {
         return Task.FromResult(_orderRepository.GetAll(true)
+			.Include(u=>u.UserName)
 			.Select(o => new OrderModel().MapFromEntity(o)).ToList());
     }
     public Task<List<OrderDetailModel>> GetOrderDetailsAsync()
@@ -39,7 +45,7 @@ public class OrderService : IOrderService
 			var newOrder = new Order
 			{
 				Status = OrderStatus.Created,
-				CustomerName = customerName
+				UserId = Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier))
 			};
 			newOrder  = await _orderRepository.Create(newOrder);
 			foreach (var id in IdList)

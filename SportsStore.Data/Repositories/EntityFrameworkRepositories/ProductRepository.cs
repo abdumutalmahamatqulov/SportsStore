@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SportsStore.Domain.Entities;
 using SportsStore.Domain.Repositories;
 
@@ -12,13 +14,15 @@ namespace SportsStore.Data.Repositories.EntityFrameworkRepositories
 	public class ProductRepository : IProductRepository
 	{
 		private readonly AppDbContext _appDbContext;
+		private readonly ILogger<ProductRepository> _logger;
 
-		public ProductRepository(AppDbContext appDbContext)
-		{
-			_appDbContext = appDbContext;
-		}
+        public ProductRepository(AppDbContext appDbContext, ILogger<ProductRepository> logger)
+        {
+            _appDbContext = appDbContext;
+            _logger = logger;
+        }
 
-		public async Task<Product> Create(Product product)
+        public async Task<Product> Create(Product product)
 		{
 			var createProduct = new Product();
 			createProduct.Id = Guid.NewGuid();
@@ -35,15 +39,24 @@ namespace SportsStore.Data.Repositories.EntityFrameworkRepositories
 
 		public async Task<Product> Delete(Guid Id)
 		{
-			var deleteProduct = await _appDbContext.Products.FirstOrDefaultAsync(x=>x.Id == Id); 
-			_appDbContext.Products.Remove(deleteProduct);
-			await _appDbContext.SaveChangesAsync();
-			return deleteProduct;
+			try
+			{
+                _appDbContext.Products.Remove(new Product { Id = Id });
+
+                await _appDbContext.SaveChangesAsync();
+
+                return null;
+            }
+			catch(Exception ex)
+			{
+				_logger.LogError(ex, ex.Message);
+				return null;
+			}
 		}
 
-		public Task<Product> Get(Guid Id)
+		public async Task<Product> Get(Guid Id)
 		{
-			return _appDbContext.Products.FirstOrDefaultAsync(p => p.Id.Equals(Id));
+			return await _appDbContext.Products.FirstOrDefaultAsync(p => p.Id.Equals(Id));
 		}
 
 		public  IQueryable<Product> GetAll(bool includeCategory)

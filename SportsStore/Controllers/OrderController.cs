@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportsStore.Domain.Services;
 using SportsStore.Services.Services;
 
@@ -24,6 +25,7 @@ public class OrderController : Controller
 
     }
 	[HttpPost]
+	[Authorize]
 	public async Task<IActionResult> Create(List<Guid> IdList, string returnUrl,string customerName)
 	{
 		await _orderService.Create(IdList, customerName);

@@ -145,7 +145,7 @@ public class OrderDetailRepository : IOrderDetailRepository
 					orderDetail.Order = new Order();
 					orderDetail.Order.Id = (Guid)reader["OrderId"];
 					orderDetail.Order.Status = (OrderStatus)(int.Parse(reader["OrderStatus"].ToString()));
-					orderDetail.Order.CustomerName = (string)reader["CustomerName"];
+					orderDetail.Order.UserId = (Guid)reader["UserId"];
 					orderDetail.Order.CreateDate = (DateTime)reader["orderCreateDate"];
 
 					orderDetails.Add(orderDetail);

@@ -1,0 +1,43 @@
+﻿@model List<UserModel>
+
+<div >
+
+	<h1 class="text-center">Users</h1>
+	<div style="display:flex;gap:7px">
+		<form asp-action="UserCheck" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Create</button>
+		</form>
+		<form asp-controller="Category" asp-action="Index" method="get">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Category</button>
+		</form>
+		<form asp-controller="Order" asp-action="Index" name="order">
+			<input type="hidden" value="@Context.GetUrl()" name="returnUrl" />
+			<button type="submit" class="btn btn-success">Order</button>
+		</form>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th><th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>@item.Name</td>
+					<td>@item.Email</td>
+					<td style="display:flex;gap:7px">
+						<form asp-action="UserProfil" method="get">
+							<input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+							<input type="hidden" value="@item.Id" name="userId" />
+							<button type="submit" class="btn btn-success">Edit</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

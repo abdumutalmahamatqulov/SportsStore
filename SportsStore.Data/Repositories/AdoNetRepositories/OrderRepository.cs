@@ -27,7 +27,7 @@ public class OrderRepository : IOrderRepository
 	{
 		var id = Guid.NewGuid();
 		string sql = $@"INSERT INTO Orders
-				VALUES(@id, @orderStatusParam, @customerName, GETDATE())";
+				VALUES(@id, @orderStatusParam, @userId, GETDATE())";
 		using (var connection = await database.GetConnection())
 		{
 			using (var command = new SqlCommand(sql, connection))
@@ -39,8 +39,8 @@ public class OrderRepository : IOrderRepository
 				orderStatusParam.ParameterName = "orderStatusParam";
 				orderStatusParam.Value = (int)order.Status;
 				var customerNameParam = command.CreateParameter();
-				customerNameParam.ParameterName = "customerName";
-				customerNameParam.Value = order.CustomerName;
+				customerNameParam.ParameterName = "userId";
+				customerNameParam.Value = order.UserId;
 				try
 				{
 					command.Parameters.Add(idParam);
@@ -93,7 +93,7 @@ public class OrderRepository : IOrderRepository
 				order.Id = (Guid)reader["Id"];
 				var s = reader["OrderStatus"];
 				order.Status = (OrderStatus)(int.Parse(reader["OrderStatus"].ToString()));
-				order.CustomerName = (string)reader["CustomerName"];
+				order.UserId = (Guid)reader["UserId"];
 				order.CreateDate = (DateTime)reader["CreateDate"];
 
 			}
@@ -126,7 +126,7 @@ public class OrderRepository : IOrderRepository
 					order.Id = (Guid)reader["Id"];
 					var s = reader["OrderStatus"];
 					order.Status = (OrderStatus)(int.Parse(reader["OrderStatus"].ToString()));
-					order.CustomerName = (string)reader["CustomerName"];
+					order.UserId = (Guid)reader["UserId"];
 					order.CreateDate = (DateTime)reader["CreateDate"];
 					orders.Add(order);
 				}
@@ -200,7 +200,7 @@ public class OrderRepository : IOrderRepository
 	{
 		var id = Guid.NewGuid();
 		string sql = $@"UPDATE Orders
-		SET CustomerName = @customerName, OrderStatus = @status,
+		SET CustomerName = @userId, OrderStatus = @status,
 		Where id = @id";
 		using (var connection = await database.GetConnection())
 		{
@@ -210,8 +210,8 @@ public class OrderRepository : IOrderRepository
 				idParam.ParameterName = "id";
 				idParam.Value = order.Id;
 				var customerNameParam = command.CreateParameter();
-				customerNameParam.ParameterName = "customerName";
-				customerNameParam.Value = order.CustomerName;
+				customerNameParam.ParameterName = "userId";
+				customerNameParam.Value = order.UserId;
 				var orderStatusParam = command.CreateParameter();
 				orderStatusParam.ParameterName = "status";
 				orderStatusParam.Value = order.Status;

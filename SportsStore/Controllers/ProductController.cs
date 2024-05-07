@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportsStore.Domain.Entities;
 using SportsStore.Domain.Models;
 using SportsStore.Domain.Services;
@@ -22,6 +23,7 @@ public class ProductController : Controller
 		return View(await _productService.GetProductsAsync());
 	}
 	[HttpGet]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Create(string returnUrl)
 	{
 		await AddToViewBag();
@@ -29,6 +31,7 @@ public class ProductController : Controller
 		return View(new ProductCreateModel());
 	}
 	[HttpPost]
+	[Authorize(Roles ="Admin,SuperAdmin")]
 	public async Task <IActionResult> Create(ProductCreateModel model, string returnUrl)
 	{
 		try
@@ -57,12 +60,14 @@ public class ProductController : Controller
 		ViewBag.Categories = await _categoryService.GetCategoriesAsync();
 	}
 	[HttpPost]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task <IActionResult> Delete(Guid Id,string returnUrl)
 	{
 		await _productService.Delete(Id);
 		return Redirect(returnUrl);
 	}
 	[HttpGet]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Update(Guid id, string returnUrl)
 	{
 		await AddToViewBag();
@@ -71,6 +76,7 @@ public class ProductController : Controller
 		return View(updateProduct);
 	}
 	[HttpPost]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Update(ProductUpdateModel model, string returnUrl)
 	{
 		try

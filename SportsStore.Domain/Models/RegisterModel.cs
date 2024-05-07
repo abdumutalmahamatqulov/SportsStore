@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsStore.Data.Repositories;
+namespace SportsStore.Domain.Models;
 
-public class SqlConnectionOptions
+public class RegisterModel : LoginModel
 {
-	public string ConnectionString { get; set; }
+	public string Name { get; set; }
 }

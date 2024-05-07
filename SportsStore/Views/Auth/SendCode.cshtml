@@ -1,0 +1,22 @@
+﻿@model SportsStore.Domain.Models.SendModel
+@{
+    ViewData["Title"] = "Send Code";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Auth" asp-action="SendCode" method="post">
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-2 control-label"></label>
+        <div class="col-md-2">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <input type="hidden" name="returnUrl" value="@(ViewBag.ReturnUrl??"/Login")" />
+    <div>
+        <button type="submit" class="btn btn-success">Send Code</button>
+        <a asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" class="btn btn-danger">Cancel</a>
+    </div>
+    <div asp-validation-summary="All" class="bg-outline-danger text-danger" />
+</form>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportsStore.Domain.Models;
 using SportsStore.Domain.Services;
 
@@ -20,6 +21,7 @@ public class CategoryController : Controller
 		return View(await _categoryService.GetCategoriesAsync());
 	}
 	[HttpGet("[action]")]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Create(string returnUrl)
 	{
 		await AddToViewBag();
@@ -27,10 +29,13 @@ public class CategoryController : Controller
 		return View(new CategoryCreateModel());
 	}
 	[HttpPost("[action]")]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Create(CategoryCreateModel model,string returnUrl)
 	{
 		try
 		{
+			var c = HttpContext;
+
 			if (!ModelState.IsValid)
 			{
 				await AddToViewBag();
@@ -48,6 +53,7 @@ public class CategoryController : Controller
 		}
 	}
 	[HttpGet("[action]")]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Update(Guid id,string returnUrl)
 	{
 		await AddToViewBag();
@@ -56,6 +62,7 @@ public class CategoryController : Controller
 		return View(updateCategory);
 	}
 	[HttpPost("[action]")]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async Task<IActionResult> Update(CategoryUpdateModel model,string returnUrl)
 	{
 		try
@@ -78,6 +85,7 @@ public class CategoryController : Controller
 	}
 
 	[HttpPost("[action]")]
+	[Authorize(Roles = "Admin,SuperAdmin")]
 	public async  Task<IActionResult> Delete(Guid id,string returnUrl)
 	{
 		await _categoryService.Delete(id);

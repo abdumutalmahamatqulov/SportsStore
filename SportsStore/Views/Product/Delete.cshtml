@@ -1,7 +1,7 @@
 ﻿@model ProductModel
 
 <div>
-	<form method="post" asp-action="Delete">
+	<form asp-controller="Product" method="post" asp-action="Delete">
 		<div class="form-group">
 			<label asp-for="Id">Id</label>
 		</div>
